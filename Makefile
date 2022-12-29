@@ -27,11 +27,11 @@ CFLAGS = -std=gnu99 -march=vr4300 -mtune=vr4300 -O2 -Wall -Werror -I$(INCDIR) -I
 LDFLAGS = -L$(ROOTDIR)/mips64-elf/lib -L$(ROOTDIR)/lib -ldragon -lmikmod -lc -lm -ldragonsys -Tn64.ld  --gc-sections
 N64TOOLFLAGS = -l $(SIZE) -h $(ROOTDIR)/mips64-elf/lib/header -t "$(TITLE)"
 
-$(NAME).v64: $ $(NAME).elf #$(NAME).dfs
+$(NAME).z64: $ $(NAME).elf #$(NAME).dfs
 	$(OBJCOPY) $(OUTDIR)/$(NAME).elf $(OUTDIR)/$(NAME).bin -O binary
-	rm -f $(OUTDIR)/$(NAME).v64
-	$(N64TOOL) $(N64TOOLFLAGS) -o $(OUTDIR)/$(NAME).v64 $(OUTDIR)/$(NAME).bin #-s 1M $(OUTDIR)/$(NAME).dfs
-	$(CHKSUM64) $(OUTDIR)/$(NAME).v64
+	rm -f $(OUTDIR)/$(NAME).z64
+	$(N64TOOL) $(N64TOOLFLAGS) -o $(OUTDIR)/$(NAME).z64 $(OUTDIR)/$(NAME).bin #-s 1M $(OUTDIR)/$(NAME).dfs
+	$(CHKSUM64) $(OUTDIR)/$(NAME).z64
 
 $(NAME).elf : $(OBJECTS)
 	@mkdir -p $(OUTDIR)

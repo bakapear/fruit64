@@ -1,15 +1,15 @@
 NAME = fruit64
-TITLE = fruit64 OS
-SIZE = 1M
+SIZE = 2M
 
+LIBDIR = ./lib
 SRCDIR = ./src
-INCDIR = ./inc
 OBJDIR = ./obj
 OUTDIR = ./out
 #RESDIR = ./res
 
-SOURCES := $(wildcard $(SRCDIR)/*.c)
-OBJECTS = $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+SOURCES := $(wildcard $(SRCDIR)/*.c $(LIBDIR)/*/*.c)
+VPATH := $(dir $(SOURCES))
+OBJECTS = $(patsubst %.c, $(OBJDIR)/%.o, $(notdir $(SOURCES)))
 
 ROOTDIR = $(N64_INST)
 GCCN64 = $(ROOTDIR)/bin/mips64-elf-
@@ -23,9 +23,9 @@ CHKSUM64 = $(ROOTDIR)/bin/chksum64
 #MKDFS = $(ROOTDIR)/bin/mkdfs
 
 #ASFLAGS = -mtune=vr4300 -march=vr4300
-CFLAGS = -std=gnu99 -march=vr4300 -mtune=vr4300 -O2 -Wall -Werror -I$(INCDIR) -I$(ROOTDIR)/mips64-elf/include -I$(ROOTDIR)/include
-LDFLAGS = -L$(ROOTDIR)/mips64-elf/lib -L$(ROOTDIR)/lib -ldragon -lmikmod -lc -lm -ldragonsys -Tn64.ld  --gc-sections
-N64TOOLFLAGS = -l $(SIZE) -h $(ROOTDIR)/mips64-elf/lib/header -t "$(TITLE)"
+CFLAGS = -std=gnu99 -march=vr4300 -mtune=vr4300 -O2 -Wall -I$(LIBDIR) -I./libdragon/include -I$(ROOTDIR)/mips64-elf/include -I$(ROOTDIR)/include
+LDFLAGS = -L$(ROOTDIR)/mips64-elf/lib -L$(ROOTDIR)/lib -ldragon -lmikmod -lc -lm -ldragonsys -Tn64ld.x  --gc-sections
+N64TOOLFLAGS = -l $(SIZE) -h "$(LIBDIR)/header.ed64" -t "EverDrive OS"
 
 $(NAME).z64: $ $(NAME).elf #$(NAME).dfs
 	$(OBJCOPY) $(OUTDIR)/$(NAME).elf $(OUTDIR)/$(NAME).bin -O binary
@@ -37,7 +37,7 @@ $(NAME).elf : $(OBJECTS)
 	@mkdir -p $(OUTDIR)
 	$(LD) -o $(OUTDIR)/$(NAME).elf $(OBJECTS) $(LDFLAGS)
 
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
+$(OBJECTS): $(OBJDIR)/%.o : %.c
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 

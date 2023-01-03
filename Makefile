@@ -1,4 +1,6 @@
 NAME = fruit64
+
+# set to 1M on release (its 2M because 1M crashes emulator)
 SIZE = 2M
 
 LIBDIR = ./lib
@@ -30,7 +32,8 @@ N64TOOLFLAGS = -l $(SIZE) -h "$(LIBDIR)/header.ed64" -t "EverDrive OS"
 $(NAME).z64: $ $(NAME).elf #$(NAME).dfs
 	$(OBJCOPY) $(OUTDIR)/$(NAME).elf $(OUTDIR)/$(NAME).bin -O binary
 	rm -f $(OUTDIR)/$(NAME).z64
-	$(N64TOOL) $(N64TOOLFLAGS) -o $(OUTDIR)/$(NAME).z64 $(OUTDIR)/$(NAME).bin #-s 1M $(OUTDIR)/$(NAME).dfs
+	$(N64TOOL) $(N64TOOLFLAGS) -o $(OUTDIR)/$(NAME).z64 $(OUTDIR)/$(NAME).bin 
+# -s 1M $(OUTDIR)/$(NAME).dfs
 	$(CHKSUM64) $(OUTDIR)/$(NAME).z64
 
 $(NAME).elf : $(OBJECTS)

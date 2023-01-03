@@ -5,7 +5,7 @@
 //
 
 #ifndef _ROM_H
-#define	_ROM_H
+#define _ROM_H
 
 /*
  *
@@ -34,11 +34,10 @@
 0040h - 0FFFh (1008 dwords): Boot code
 */
 
-#define DP_BASE_REG		0x04100000
-#define VI_BASE_REG		0x04400000
-#define PI_BASE_REG		0x04600000
-#define PIF_RAM_START		0x1FC007C0
-
+#define DP_BASE_REG 0x04100000
+#define VI_BASE_REG 0x04400000
+#define PI_BASE_REG 0x04600000
+#define PIF_RAM_START 0x1FC007C0
 
 /*
  * PI status register has 3 bits active when read from (PI_STATUS_REG - read)
@@ -47,113 +46,108 @@
  *	Bit 2: Error    - set when CPU issues IO request while DMA is busy
  */
 
-#define PI_STATUS_REG		(PI_BASE_REG+0x10)
+#define PI_STATUS_REG (PI_BASE_REG + 0x10)
 
 /* PI DRAM address (R/W): starting RDRAM address */
-#define PI_DRAM_ADDR_REG	(PI_BASE_REG+0x00)	/* DRAM address */
+#define PI_DRAM_ADDR_REG (PI_BASE_REG + 0x00) /* DRAM address */
 
 /* PI pbus (cartridge) address (R/W): starting AD16 address */
-#define PI_CART_ADDR_REG	(PI_BASE_REG+0x04)
+#define PI_CART_ADDR_REG (PI_BASE_REG + 0x04)
 
 /* PI read length (R/W): read data length */
-#define PI_RD_LEN_REG		(PI_BASE_REG+0x08)
+#define PI_RD_LEN_REG (PI_BASE_REG + 0x08)
 
 /* PI write length (R/W): write data length */
-#define PI_WR_LEN_REG		(PI_BASE_REG+0x0C)
+#define PI_WR_LEN_REG (PI_BASE_REG + 0x0C)
 
 /*
  * PI status (R): [0] DMA busy, [1] IO busy, [2], error
  *           (W): [0] reset controller (and abort current op), [1] clear intr
  */
 
-#define PI_BSD_DOM1_LAT_REG	(PI_BASE_REG+0x14)
+#define PI_BSD_DOM1_LAT_REG (PI_BASE_REG + 0x14)
 
 /* PI dom1 pulse width (R/W): [7:0] domain 1 device R/W strobe pulse width */
-#define PI_BSD_DOM1_PWD_REG	(PI_BASE_REG+0x18)
+#define PI_BSD_DOM1_PWD_REG (PI_BASE_REG + 0x18)
 
 /* PI dom1 page size (R/W): [3:0] domain 1 device page size */
-#define PI_BSD_DOM1_PGS_REG	(PI_BASE_REG+0x1C)    /*   page size */
+#define PI_BSD_DOM1_PGS_REG (PI_BASE_REG + 0x1C) /*   page size */
 
 /* PI dom1 release (R/W): [1:0] domain 1 device R/W release duration */
-#define PI_BSD_DOM1_RLS_REG	(PI_BASE_REG+0x20)
+#define PI_BSD_DOM1_RLS_REG (PI_BASE_REG + 0x20)
 /* PI dom2 latency (R/W): [7:0] domain 2 device latency */
-#define PI_BSD_DOM2_LAT_REG	(PI_BASE_REG+0x24)    /* Domain 2 latency */
+#define PI_BSD_DOM2_LAT_REG (PI_BASE_REG + 0x24) /* Domain 2 latency */
 
 /* PI dom2 pulse width (R/W): [7:0] domain 2 device R/W strobe pulse width */
-#define PI_BSD_DOM2_PWD_REG	(PI_BASE_REG+0x28)    /*   pulse width */
+#define PI_BSD_DOM2_PWD_REG (PI_BASE_REG + 0x28) /*   pulse width */
 
 /* PI dom2 page size (R/W): [3:0] domain 2 device page size */
-#define PI_BSD_DOM2_PGS_REG	(PI_BASE_REG+0x2C)    /*   page size */
+#define PI_BSD_DOM2_PGS_REG (PI_BASE_REG + 0x2C) /*   page size */
 
 /* PI dom2 release (R/W): [1:0] domain 2 device R/W release duration */
-#define PI_BSD_DOM2_RLS_REG	(PI_BASE_REG+0x30)    /*   release duration */
+#define PI_BSD_DOM2_RLS_REG (PI_BASE_REG + 0x30) /*   release duration */
 
+#define PI_DOMAIN1_REG PI_BSD_DOM1_LAT_REG
+#define PI_DOMAIN2_REG PI_BSD_DOM2_LAT_REG
 
-#define	PI_DOMAIN1_REG		PI_BSD_DOM1_LAT_REG
-#define	PI_DOMAIN2_REG		PI_BSD_DOM2_LAT_REG
+#define PI_STATUS_ERROR 0x04
+#define PI_STATUS_IO_BUSY 0x02
+#define PI_STATUS_DMA_BUSY 0x01
 
+#define DPC_START (DP_BASE_REG + 0x00)
+#define DPC_END (DP_BASE_REG + 0x04)
+#define DPC_CURRENT (DP_BASE_REG + 0x08)
+#define DPC_STATUS (DP_BASE_REG + 0x0C)
+#define DPC_CLOCK (DP_BASE_REG + 0x10)
+#define DPC_BUFBUSY (DP_BASE_REG + 0x14)
+#define DPC_PIPEBUSY (DP_BASE_REG + 0x18)
+#define DPC_TMEM (DP_BASE_REG + 0x1C)
 
-#define	PI_STATUS_ERROR		0x04
-#define	PI_STATUS_IO_BUSY	0x02
-#define	PI_STATUS_DMA_BUSY	0x01
+#define VI_CONTROL (VI_BASE_REG + 0x00)
+#define VI_FRAMEBUFFER (VI_BASE_REG + 0x04)
+#define VI_WIDTH (VI_BASE_REG + 0x08)
+#define VI_V_INT (VI_BASE_REG + 0x0C)
+#define VI_CUR_LINE (VI_BASE_REG + 0x10)
+#define VI_TIMING (VI_BASE_REG + 0x14)
+#define VI_V_SYNC (VI_BASE_REG + 0x18)
+#define VI_H_SYNC (VI_BASE_REG + 0x1C)
+#define VI_H_SYNC2 (VI_BASE_REG + 0x20)
+#define VI_H_LIMITS (VI_BASE_REG + 0x24)
+#define VI_COLOR_BURST (VI_BASE_REG + 0x28)
+#define VI_H_SCALE (VI_BASE_REG + 0x2C)
+#define VI_VSCALE (VI_BASE_REG + 0x30)
 
-#define                      DPC_START                    (DP_BASE_REG + 0x00)
-#define                      DPC_END                      (DP_BASE_REG + 0x04)
-#define                      DPC_CURRENT                  (DP_BASE_REG + 0x08)
-#define                      DPC_STATUS                   (DP_BASE_REG + 0x0C)
-#define                      DPC_CLOCK                    (DP_BASE_REG + 0x10)
-#define                      DPC_BUFBUSY                  (DP_BASE_REG + 0x14)
-#define                      DPC_PIPEBUSY                 (DP_BASE_REG + 0x18)
-#define                      DPC_TMEM                     (DP_BASE_REG + 0x1C)
+#define PHYS_TO_K0(x) ((u32)(x) | 0x80000000) /* physical to kseg0 */
+#define K0_TO_PHYS(x) ((u32)(x)&0x1FFFFFFF)   /* kseg0 to physical */
+#define PHYS_TO_K1(x) ((u32)(x) | 0xA0000000) /* physical to kseg1 */
+#define K1_TO_PHYS(x) ((u32)(x)&0x1FFFFFFF)   /* kseg1 to physical */
 
-#define	VI_CONTROL	(VI_BASE_REG + 0x00)
-#define	VI_FRAMEBUFFER	(VI_BASE_REG + 0x04)
-#define	VI_WIDTH	(VI_BASE_REG + 0x08)
-#define	VI_V_INT	(VI_BASE_REG + 0x0C)
-#define	VI_CUR_LINE	(VI_BASE_REG + 0x10)
-#define	VI_TIMING	(VI_BASE_REG + 0x14)
-#define	VI_V_SYNC	(VI_BASE_REG + 0x18)
-#define	VI_H_SYNC	(VI_BASE_REG + 0x1C)
-#define	VI_H_SYNC2	(VI_BASE_REG + 0x20)
-#define	VI_H_LIMITS	(VI_BASE_REG + 0x24)
-#define	VI_COLOR_BURST	(VI_BASE_REG + 0x28)
-#define	VI_H_SCALE	(VI_BASE_REG + 0x2C)
-#define	VI_VSCALE	(VI_BASE_REG + 0x30)
+#define IO_READ(addr) (*(volatile u32*)PHYS_TO_K1(addr))
+#define IO_WRITE(addr, data) (*(volatile u32*)PHYS_TO_K1(addr) = (u32)(data))
 
-#define	PHYS_TO_K0(x)	((u32)(x)|0x80000000)	/* physical to kseg0 */
-#define	K0_TO_PHYS(x)	((u32)(x)&0x1FFFFFFF)	/* kseg0 to physical */
-#define	PHYS_TO_K1(x)	((u32)(x)|0xA0000000)	/* physical to kseg1 */
-#define	K1_TO_PHYS(x)	((u32)(x)&0x1FFFFFFF)	/* kseg1 to physical */
+#define SAVE_SIZE_SRAM 32768
+#define SAVE_SIZE_SRAM96 131072  // TODO: or should this be 98304
+#define SAVE_SIZE_EEP4k 512
+#define SAVE_SIZE_EEP16k 2048
+#define SAVE_SIZE_FLASH 131072
 
-#define	IO_READ(addr)		(*(volatile u32*)PHYS_TO_K1(addr))
-#define	IO_WRITE(addr,data)	(*(volatile u32*)PHYS_TO_K1(addr)=(u32)(data))
+#define ROM_ADDR 0xb0000000
 
-#define SAVE_SIZE_SRAM 		32768
-#define SAVE_SIZE_SRAM96 	131072 //TODO: or should this be 98304
-#define SAVE_SIZE_EEP4k 	512
-#define SAVE_SIZE_EEP16k 	2048
-#define SAVE_SIZE_FLASH 	131072
+#define FRAM_EXECUTE_CMD 0xD2000000
+#define FRAM_STATUS_MODE_CMD 0xE1000000
+#define FRAM_ERASE_OFFSET_CMD 0x4B000000
+#define FRAM_WRITE_OFFSET_CMD 0xA5000000
+#define FRAM_ERASE_MODE_CMD 0x78000000
+#define FRAM_WRITE_MODE_CMD 0xB4000000
+#define FRAM_READ_MODE_CMD 0xF0000000
 
-#define ROM_ADDR 		0xb0000000
-
-
-#define FRAM_EXECUTE_CMD		0xD2000000
-#define FRAM_STATUS_MODE_CMD	0xE1000000
-#define FRAM_ERASE_OFFSET_CMD	0x4B000000
-#define FRAM_WRITE_OFFSET_CMD	0xA5000000
-#define FRAM_ERASE_MODE_CMD		0x78000000
-#define FRAM_WRITE_MODE_CMD		0xB4000000
-#define FRAM_READ_MODE_CMD		0xF0000000
-
-#define FRAM_STATUS_REG	0xA8000000
+#define FRAM_STATUS_REG 0xA8000000
 #define FRAM_COMMAND_REG 0xA8010000
 
-
-
-//void romFill(...);
+// void romFill(...);
 void pif_boot();
 
-int is_valid_rom(unsigned char *buffer);
+int is_valid_rom(unsigned char* buffer);
 void swap_header(unsigned char* header, int loadlength);
 
 u8 getCicType(u8 bios_cic);

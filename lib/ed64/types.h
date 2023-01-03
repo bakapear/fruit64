@@ -5,7 +5,7 @@
 //
 
 #ifndef _TYPES_H
-#define	_TYPES_H
+#define _TYPES_H
 
 #include <stdint.h>
 
@@ -24,11 +24,9 @@
 #define s32 long
 #define s64 long long
 
-
 typedef volatile uint64_t sim_vu64;
 typedef volatile uint64_t sim_vu64;
 typedef unsigned int sim_u32;
 typedef uint64_t sim_u64;
 
-
-#endif	/* _TYPES_H */
+#endif /* _TYPES_H */

@@ -5,7 +5,7 @@
 //
 
 #ifndef _SD_H
-#define	_SD_H
+#define _SD_H
 
 #include "types.h"
 
@@ -16,12 +16,9 @@ u8 sdWrite(u32 sector, const u8 *buff, u16 count);
 
 void sdSetInterface(u32 interface);
 
-
-
 #define WAIT 1024
 
 #define DISK_IFACE_SPI 0
 #define DISK_IFACE_SD 1
 
-
-#endif	/* _SD_H */
+#endif /* _SD_H */

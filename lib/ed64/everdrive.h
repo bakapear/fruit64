@@ -5,16 +5,15 @@
 //
 
 #ifndef _EVERDRIVE_H
-#define	_EVERDRIVE_H
+#define _EVERDRIVE_H
 
 #include "types.h"
 
 #define OS_VER "1.29"
 
-#define ROM_LEN  0x4000000
+#define ROM_LEN 0x4000000
 #define ROM_ADDR 0xb0000000
 #define ROM_END_ADDR (0xb0000000 + 0x4000000)
-
 
 #define SAVE_TYPE_OFF 0
 #define SAVE_TYPE_SRAM 1
@@ -38,12 +37,10 @@
 #define REG_SEC 10
 #define REG_VER 11
 
-
 #define REG_CFG_CNT 16
 #define REG_CFG_DAT 17
 #define REG_MAX_MSG 18
 #define REG_CRC 19
-
 
 #define DCFG_SD_TO_RAM 1
 #define DCFG_RAM_TO_SD 2
@@ -55,7 +52,7 @@
 #define ED_CFG_WR_MOD 2
 #define ED_CFG_WR_ADDR_MASK 3
 
-//new firmware load
+// new firmware load
 #define REGS_BASE 0xA8040000
 //--
 
@@ -81,7 +78,6 @@ u16 evd_readReg(u8 reg);
 void evd_writeReg(u8 reg, u16 val);
 void evd_setSaveType(u8 type);
 
-
 u8 romLoadSettingsFromSD();
 u8 romSaveInfoToLog();
 void evd_writeMsg(u8 dat);
@@ -102,8 +98,7 @@ void evd_enableSPIMode();
 u8 evd_isSDMode();
 void evd_setDmaCallback(void (*callback)());
 
-
-//firmware upload
+// firmware upload
 extern u32 bi_reg_rd(u32 reg);
 extern void bi_reg_wr(u32 reg, u32 data);
 void bi_init();
@@ -122,5 +117,4 @@ u8 evd_mmcReadNextBlock(void *dat);
 void evd_mmcCloseRW();
  */
 
-
-#endif	/* _EVERDRIVE_H */
+#endif /* _EVERDRIVE_H */

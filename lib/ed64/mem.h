@@ -4,8 +4,10 @@
 // See LICENSE file in the project root for full license information.
 //
 
+#include "types.h"
+
 #ifndef _MEM_H
-#define	_MEM_H
+#define _MEM_H
 
 #define SPI_SPEED_INIT 2
 #define SPI_SPEED_25 1
@@ -17,7 +19,6 @@
 #define memSpiSSOff evd_spiSSOff
 #define memSpiSSOn evd_spiSSOn
 
-
 void memSpiSSOn();
 void memSpiSSOff();
 void memSpiBusy();
@@ -27,11 +28,11 @@ void spiReadBlock(void *dat);
 void spiWriteBlock(void *dat);
 u8 memSpiRead(void *dst, u16 slen);
 u8 memSpiWrite(const void *src);
-//u8 mem_spi(u8 dat);
+// u8 mem_spi(u8 dat);
 void memfill(void *dst, u8 val, u16 len);
 void memcopy(void *src, void *dst, u16 len);
 void memSpiSetDma(u8 mode);
 void memRomWrite32(u32 addr, u32 val);
 u32 memRomRead32(u32 addr);
 
-#endif	/* _MEM_H */
+#endif /* _MEM_H */

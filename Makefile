@@ -26,7 +26,7 @@ CHKSUM64 = $(ROOTDIR)/bin/chksum64
 
 #ASFLAGS = -mtune=vr4300 -march=vr4300
 CFLAGS = -std=gnu99 -march=vr4300 -mtune=vr4300 -O2 -Wall -I$(LIBDIR) -I./libdragon/include -I$(ROOTDIR)/mips64-elf/include -I$(ROOTDIR)/include
-LDFLAGS = -L$(ROOTDIR)/mips64-elf/lib -L$(ROOTDIR)/lib -ldragon -lmikmod -lc -lm -ldragonsys -Tn64ld.x  --gc-sections
+LDFLAGS = -L$(ROOTDIR)/mips64-elf/lib -L$(ROOTDIR)/lib -ldragon -lmikmod -lc -lm -ldragonsys -Tn64.ld  --gc-sections
 N64TOOLFLAGS = -l $(SIZE) -h "$(LIBDIR)/header.ed64" -t "EverDrive OS"
 
 $(NAME).z64: $ $(NAME).elf #$(NAME).dfs

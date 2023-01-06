@@ -4,7 +4,7 @@
 #include "ed64.h"
 #include "gfx.h"
 
-void setTVMode(tv_mode_t mode) {
+void setTVMode(tv_type_t mode) {
     *(uint32_t *)0x80000300 = mode;
 }
 

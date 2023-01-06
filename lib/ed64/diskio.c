@@ -20,7 +20,7 @@
 /* Get Drive Status                                                      */
 /*-----------------------------------------------------------------------*/
 
-DSTATUS disk_status(
+DSTATUS ed_disk_status(
     BYTE pdrv /* Physical drive nmuber to identify the drive */
 ) {
     DSTATUS stat;
@@ -60,7 +60,7 @@ DSTATUS disk_status(
 /* Initialize a Drive                                                    */
 /*-----------------------------------------------------------------------*/
 
-DSTATUS disk_initialize(
+DSTATUS ed_disk_initialize(
     BYTE pdrv /* Physical drive nmuber to identify the drive */
 ) {
     DSTATUS stat;
@@ -106,7 +106,7 @@ DSTATUS disk_initialize(
 /* Read Sector(s)                                                        */
 /*-----------------------------------------------------------------------*/
 
-DRESULT disk_read(
+DRESULT ed_disk_read(
     BYTE pdrv,    /* Physical drive nmuber to identify the drive */
     BYTE *buff,   /* Data buffer to store read data */
     DWORD sector, /* Start sector in LBA */
@@ -163,7 +163,7 @@ DRESULT disk_read(
 /* Write Sector(s)                                                       */
 /*-----------------------------------------------------------------------*/
 
-DRESULT disk_write(
+DRESULT ed_disk_write(
     BYTE pdrv,        /* Physical drive nmuber to identify the drive */
     const BYTE *buff, /* Data to be written */
     DWORD sector,     /* Start sector in LBA */
@@ -220,7 +220,7 @@ DRESULT disk_write(
 /* Miscellaneous Functions                                               */
 /*-----------------------------------------------------------------------*/
 
-DRESULT disk_ioctl(
+DRESULT ed_disk_ioctl(
     BYTE pdrv, /* Physical drive nmuber (0..) */
     BYTE cmd,  /* Control code */
     void *buff /* Buffer to send/receive control data */

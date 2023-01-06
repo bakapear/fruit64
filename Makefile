@@ -1,7 +1,5 @@
 NAME = fruit64
-
-# set to 1M on release (its 2M because 1M crashes emulator)
-SIZE = 2M
+SIZE = 1M
 
 LIBDIR = ./lib
 SRCDIR = ./src
@@ -27,7 +25,7 @@ CHKSUM64 = $(ROOTDIR)/bin/chksum64
 #ASFLAGS = -mtune=vr4300 -march=vr4300
 CFLAGS = -std=gnu99 -march=vr4300 -mtune=vr4300 -O2 -Wall -I$(LIBDIR) -I./libdragon/include -I$(ROOTDIR)/mips64-elf/include -I$(ROOTDIR)/include
 LDFLAGS = -L$(ROOTDIR)/mips64-elf/lib -L$(ROOTDIR)/lib -ldragon -lmikmod -lc -lm -ldragonsys -Tn64.ld  --gc-sections
-N64TOOLFLAGS = -l $(SIZE) -h "$(LIBDIR)/header.ed64" -t "EverDrive OS"
+N64TOOLFLAGS = -l $(SIZE) -h $(ROOTDIR)/mips64-elf/lib/header -t "$(NAME)"
 
 $(NAME).z64: $ $(NAME).elf #$(NAME).dfs
 	$(OBJCOPY) $(OUTDIR)/$(NAME).elf $(OUTDIR)/$(NAME).bin -O binary

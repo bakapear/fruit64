@@ -16,7 +16,7 @@ void setSDSpeed(sd_speed_t speed) {
 }
 
 int main() {
-    int fat = ed64init();
+    int fat = initED64();
 
     setTVMode(TV_PAL);
     setSDSpeed(SD_50MHZ);

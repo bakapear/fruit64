@@ -28,14 +28,14 @@ int initFS() {
     return result == FR_OK;
 }
 
-int ed64init() {
+int initED64() {
     configure();
     controller_init();
     init_interrupts();
     return initFS();
 }
 
-void ed64close() {
+void closeED64() {
     f_mount(0, "", 0);
     free(fs);
 }

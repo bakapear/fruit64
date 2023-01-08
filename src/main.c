@@ -16,15 +16,33 @@ void setSDSpeed(sd_speed_t speed) {
 }
 
 int main() {
-    int fat = initED64();
+    initED64();
 
     setTVMode(TV_PAL);
     setSDSpeed(SD_50MHZ);
     display_init(RESOLUTION_320x240, DEPTH_32_BPP, 3, GAMMA_NONE, ANTIALIAS_RESAMPLE);
 
-    gfx_lock();
-    char msg[128];
-    sprintf(msg, "Hello!\nFAT Initialized: %i", fat);
-    gfx_text(10, 10, msg);
-    gfx_unlock();
+    fb_setdir("/");
+
+    while (1) {
+        gfx_lock();
+        gfx_fill(0xFFAA55FF);
+        fb_draw();
+        gfx_unlock();
+
+        while (1) {
+            controller_scan();
+            struct SI_condat pressed = get_keys_pressed().c[0];  // continous
+            struct SI_condat holding = get_keys_down().c[0];     // once
+
+            if (pressed.up) fb_move(0, 1);
+            else if (pressed.down) fb_move(0, -1);
+            else if (pressed.left) fb_move(-1, 0);
+            else if (pressed.right) fb_move(1, 0);
+            else if (holding.A) fb_select();
+            else if (holding.B) fb_back();
+            else continue;
+            break;
+        }
+    }
 }

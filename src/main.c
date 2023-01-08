@@ -10,8 +10,8 @@ void setTVMode(tv_type_t mode) {
 
 void setSDSpeed(sd_speed_t speed) {
     switch (speed) {
-        case SD_25MHZ: return bi_speed25();
-        case SD_50MHZ: return bi_speed50();
+        case SD_25MHZ: bi_speed25(); break;
+        case SD_50MHZ: bi_speed50(); break;
     }
 }
 

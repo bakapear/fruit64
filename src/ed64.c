@@ -31,7 +31,6 @@ int initFS() {
 int initED64() {
     configure();
     controller_init();
-    init_interrupts();
     return initFS();
 }
 

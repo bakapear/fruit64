@@ -3,3 +3,4 @@ IndentWidth: 4
 ColumnLimit: 0
 AllowShortBlocksOnASingleLine: true
 AllowShortCaseLabelsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse

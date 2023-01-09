@@ -1,58 +1,15 @@
+
 #include "filebrowser.h"
 
-#include <ed64/ff.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "utils.h"
 
 char fb_dir[256];
 direntry_t *fb_list;
 int fb_size, fb_cursor, fb_shift, fb_cursor_last, fb_shift_last;
 int fb_page = 18;
-
-int sort_compare(const void *a, const void *b) {
-    direntry_t *A = (direntry_t *)a;
-    direntry_t *B = (direntry_t *)b;
-
-    if (A->type == DT_DIR && B->type != DT_DIR) return -1;
-    if (A->type != DT_DIR && B->type == DT_DIR) return 1;
-    return strcmp(A->name, B->name);
-}
-
-int sd_read(direntry_t **list, char *path) {
-    free(*list);
-    *list = malloc(sizeof(direntry_t));
-
-    DIR dp;
-    FILINFO info;
-    FRESULT res;
-
-    if (f_opendir(&dp, path) != FR_OK) return -1;  // dir not found
-
-    int count = 0;
-
-    while (1) {
-        res = f_readdir(&dp, &info);
-        if (res != FR_OK || info.fname[0] == 0) break;  // end of dir
-
-        *list = realloc(*list, sizeof(direntry_t) * (count + 1));
-
-        if (info.fattrib & AM_DIR) {
-            (*list)[count].type = DT_DIR;
-        } else {
-            (*list)[count].type = DT_REG;
-        }
-
-        strcpy((*list)[count].name, info.fname);
-
-        count++;
-    }
-
-    f_closedir(&dp);
-
-    qsort(*list, count, sizeof(direntry_t), sort_compare);
-
-    return count;
-}
 
 void fb_setdir(char *path) {
     strcpy(fb_dir, path);

@@ -3,6 +3,7 @@
 
 #include "ed64.h"
 #include "gfx.h"
+#include "utils.h"
 
 void setTVMode(tv_type_t mode) {
     *(uint32_t *)0x80000300 = mode;
@@ -13,6 +14,12 @@ void setSDSpeed(sd_speed_t speed) {
         case SD_25MHZ: bi_speed25(); break;
         case SD_50MHZ: bi_speed50(); break;
     }
+}
+
+sprite_t *spr_bg;
+
+void setBackground(const char *path) {
+    spr_bg = load_png(path);
 }
 
 int main() {
@@ -26,9 +33,11 @@ int main() {
 
     fb_setdir("/");
 
+    setBackground("background.png");
+
     while (1) {
         gfx_lock();
-        gfx_fill(0xFFAA55FF);
+        spr_bg ? gfx_sprite(0, 0, spr_bg) : gfx_fill(0xFFAA55FF);
         fb_draw();
         gfx_unlock();
 

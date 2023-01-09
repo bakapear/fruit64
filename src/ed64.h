@@ -6,7 +6,7 @@ typedef enum {
     SD_50MHZ = 1
 } sd_speed_t;
 
-int initED64();
-void closeED64();
+int ed64_init();
+void ed64_close();
 
 #endif

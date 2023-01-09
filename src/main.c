@@ -16,10 +16,12 @@ void setSDSpeed(sd_speed_t speed) {
 }
 
 int main() {
-    initED64();
+    ed64_init();
 
     setTVMode(TV_PAL);
     setSDSpeed(SD_50MHZ);
+
+    controller_init();
     display_init(RESOLUTION_320x240, DEPTH_32_BPP, 3, GAMMA_NONE, ANTIALIAS_RESAMPLE);
 
     fb_setdir("/");

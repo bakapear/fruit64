@@ -1,5 +1,3 @@
-#include "ed64.h"
-
 #include <ed64/everdrive.h>
 #include <ed64/ff.h>
 #include <ed64/mem.h>
@@ -28,13 +26,12 @@ int initFS() {
     return result == FR_OK;
 }
 
-int initED64() {
+int ed64_init() {
     configure();
-    controller_init();
     return initFS();
 }
 
-void closeED64() {
-    f_mount(0, "", 0);
+void ed64_close() {
+    f_unmount("");
     free(fs);
 }

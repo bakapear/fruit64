@@ -8,30 +8,34 @@
 
 char fb_dir[256];
 direntry_t *fb_list;
-int fb_size, fb_cursor, fb_shift, fb_cursor_last, fb_shift_last;
+int fb_size, fb_cursor, *fb_cursor_stack, fb_cursor_stack_size;
 int fb_page = 18;
 
 void fb_setdir(char *path) {
     strcpy(fb_dir, path);
     fb_size = sd_read(&fb_list, path);
-    fb_cursor = fb_shift = 0;
+    fb_cursor = 0;
 }
 
 void fb_move(int x, int y) {
-    if (x == 0) {
-        fb_cursor += (y > 0 ? -1 : 1);
-        if (fb_cursor - fb_shift >= fb_page) fb_cursor -= fb_page;
+    int shift = (fb_cursor / fb_page) * fb_page;
+
+    if (x != 0) {
+        if ((x < 0 && shift != 0) || (x > 0 && shift <= fb_size - fb_page)) {
+            fb_cursor += (x * fb_page);
+        }
+    }
+
+    if (y != 0) {
+        fb_cursor += y;
+
+        if (fb_cursor - shift < 0) fb_cursor += fb_page;
+        else if (fb_cursor - shift >= fb_page) fb_cursor -= fb_page;
         else if (fb_cursor > fb_size - 1) fb_cursor -= fb_size % fb_page;
-        else if (fb_cursor - fb_shift < 0) fb_cursor += fb_page;
-    } else {
-        if (x < 0 && fb_shift != 0) fb_cursor -= fb_page;
-        else if (x > 0 && fb_shift <= fb_size - fb_page) fb_cursor += fb_page;
     }
 
     if (fb_cursor < 0) fb_cursor = 0;
-    if (fb_cursor > fb_size - 1) fb_cursor = fb_size - 1;
-    if (fb_cursor - fb_shift >= fb_page) fb_shift += fb_page;
-    if (fb_cursor - fb_shift < 0) fb_shift -= fb_page;
+    else if (fb_cursor >= fb_size) fb_cursor = fb_size - 1;
 }
 
 void fb_select() {
@@ -40,8 +44,8 @@ void fb_select() {
         if (fb_dir[strlen(fb_dir) - 1] != '/') strcat(fb_dir, "/");
         strcat(fb_dir, current.name);
 
-        fb_cursor_last = fb_cursor;
-        fb_shift_last = fb_shift;
+        fb_cursor_stack = realloc(fb_cursor_stack, sizeof(int) * (fb_cursor_stack_size + 1));
+        fb_cursor_stack[fb_cursor_stack_size++] = fb_cursor;
         fb_setdir(fb_dir);
     }
 }
@@ -54,8 +58,8 @@ void fb_back() {
     *last = '\0';
 
     fb_setdir(fb_dir);
-    fb_cursor = fb_cursor_last;
-    fb_shift = fb_shift_last;
+    fb_cursor = fb_cursor_stack[--fb_cursor_stack_size];
+    fb_cursor_stack = realloc(fb_cursor_stack, sizeof(int) * (fb_cursor_stack_size + 1));
 }
 
 void fb_draw() {
@@ -81,9 +85,10 @@ void fb_draw() {
         gfx_text(x, y, "<EMPTY DIRECTORY>");
     } else {
         // list
-        int max = fb_page + fb_shift;
-        if (max > fb_size) max = fb_size;
-        for (int i = fb_shift; i < max; i++) {
+        int from = (fb_cursor / fb_page) * fb_page;
+        int to = from + fb_page;
+        if (to > fb_size) to = fb_size;
+        for (int i = from; i < to; i++) {
             if (i == fb_cursor) {
                 gfx_window(x - 11 - 4, y - 2, 278 + 11, 10, 0, 0, 0xFFFFFF99);
                 gfx_color(fb_list[i].type == DT_DIR ? 0xCC44CCFF : 0xFFFFFFFF, 0);

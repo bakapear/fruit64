@@ -46,8 +46,8 @@ int main() {
             struct SI_condat pressed = get_keys_pressed().c[0];  // continous
             struct SI_condat holding = get_keys_down().c[0];     // once
 
-            if (pressed.up) fb_move(0, 1);
-            else if (pressed.down) fb_move(0, -1);
+            if (pressed.up) fb_move(0, -1);
+            else if (pressed.down) fb_move(0, 1);
             else if (pressed.left) fb_move(-1, 0);
             else if (pressed.right) fb_move(1, 0);
             else if (holding.A) fb_select();
